@@ -1,20 +1,12 @@
+document.getElementById('sendButton').addEventListener('click', async () => {
+  const input = document.getElementById('userInput').value;
 
-async function sendToAPI() {
-  const userMessage = document.getElementById('userInput').value;
-  const responseBox = document.getElementById('responseBox');
+  const response = await fetch('/.netlify/functions/ask-openai', {
+    method: 'POST',
+    body: JSON.stringify({ message: input }),
+  });
 
-  responseBox.textContent = "Thinking...";
+  const data = await response.json();
 
-  try {
-    const response = await fetch('/.netlify/functions/ask-openai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: userMessage })
-    });
-
-    const data = await response.json();
-    responseBox.textContent = data.reply || "No response.";
-  } catch (error) {
-    responseBox.textContent = "Error: " + error.message;
-  }
-}
+  document.getElementById('responseBox').innerText = data.reply;
+});
