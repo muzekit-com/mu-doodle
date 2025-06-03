@@ -1,26 +1,17 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Moodoodle Sandbox</title>
-  </head>
-  <body>
-    <h1>Moodoodle Sandbox</h1>
-    <textarea id="input" placeholder="Ask me something..."></textarea><br>
-    <button onclick="send()">Send</button>
-    <pre id="output"></pre>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moodoodle Sandbox</title>
+</head>
+<body>
+  <h1>Moodoodle Sandbox</h1>
 
-    <script>
-      async function send() {
-        const input = document.getElementById("input").value;
-        const response = await fetch("/.netlify/functions/ask-openai", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: input }),
-        });
+  <input id="userInput" type="text" placeholder="Type your message here" />
+  <button id="sendButton">Send</button>
 
-        const data = await response.json();
-        document.getElementById("output").innerText = data.reply || data.error || "No reply.";
-      }
-    </script>
-  </body>
+  <pre id="responseBox"></pre>
+
+  <script src="main.js"></script>
+</body>
 </html>
